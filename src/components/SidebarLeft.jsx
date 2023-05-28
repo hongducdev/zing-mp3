@@ -8,7 +8,7 @@ const activeStyle =
 
 const SidebarLeft = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-main-200">
       <div className="w-full h-[70px] py-4 px-6 flex items-center justify-start">
         <Link to="/">
           <img src="/logo-light.svg" alt="logo" className="w-[120px] h-10" />
