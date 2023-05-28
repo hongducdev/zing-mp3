@@ -10,7 +10,7 @@ const appReducer = (state = initState, action) => {
       return state;
 
     default:
-      break;
+      return state;
   }
 };
 
