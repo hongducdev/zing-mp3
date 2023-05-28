@@ -1,6 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import { sidebarMenu } from "../utils/menu";
 
+const notActiveStyle =
+  "py-2 px-[25px] font-bold text-[#32323D] text-[13px] flex gap-[12px] items-center";
+const activeStyle =
+  "py-2 px-[25px] font-bold text-[#0F7070] text-[13px] flex gap-[12px] items-center";
+
 const SidebarLeft = () => {
   return (
     <div className="flex flex-col">
@@ -14,14 +19,13 @@ const SidebarLeft = () => {
           <NavLink
             key={index}
             to={item.path}
-            className="flex items-center justify-start w-full h-[50px] px-6 hover:bg-gray-100"
+            end={item.end}
+            className={({ isActive }) =>
+              isActive ? activeStyle : notActiveStyle
+            }
           >
-            <div className="w-[30px] h-[30px] mr-4">
-              {
-                item.icons
-              }
-            </div>
-            <span className="text-sm font-medium">Home</span>
+            {item.icons}
+            <span>{item.text}</span>
           </NavLink>
         ))}
       </div>
