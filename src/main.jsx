@@ -5,12 +5,15 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import reduxConfig from "./redux.js";
+import { BrowserRouter } from "react-router-dom";
 
 const store = reduxConfig();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <App />
-    <ToastContainer />
+    <BrowserRouter>
+      <App />
+      <ToastContainer />
+    </BrowserRouter>
   </Provider>
 );
