@@ -6,14 +6,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import reduxConfig from "./redux.js";
 import { BrowserRouter } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 
-const store = reduxConfig();
+const { store, persistor } = reduxConfig();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-      <ToastContainer />
-    </BrowserRouter>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <App />
+        <ToastContainer />
+      </BrowserRouter>
+    </PersistGate>
   </Provider>
 );
