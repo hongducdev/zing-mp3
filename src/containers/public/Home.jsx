@@ -17,7 +17,9 @@ const Home = () => {
       <div className="h-[70px] px-[59px] flex items-center">
         <Header />
       </div>
-      <Slide />
+      <div className="w-full">
+        <Slide />
+      </div>
     </div>
   );
 };
