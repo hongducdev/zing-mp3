@@ -3,12 +3,11 @@ import * as api from "../../api";
 import { useEffect } from "react";
 
 const Home = () => {
-
   useEffect(() => {
     const fetchDataHome = async () => {
       const response = await api.getHome();
-      console.log(response);
-    }
+      console.log("🚀 ~ fetchDataHome ~ response:", response);
+    };
     fetchDataHome();
   }, []);
 
