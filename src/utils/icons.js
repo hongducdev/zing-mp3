@@ -15,6 +15,7 @@ import {
 } from "react-icons/bs";
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi";
 import { CiShuffle, CiRepeat } from "react-icons/ci";
+import { IoMusicalNotesOutline } from "react-icons/io5";
 
 const icons = {
   MdOutlineLibraryMusic,
@@ -33,6 +34,7 @@ const icons = {
   BsPauseFill,
   BiSkipNext,
   BiSkipPrevious,
+  IoMusicalNotesOutline,
 };
 
 export default icons;

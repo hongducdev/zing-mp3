@@ -3,12 +3,12 @@ import { Header, Player, SidebarLeft, SidebarRight } from "../../components";
 
 const Public = () => {
   return (
-    <div className="w-full min-h-screen flex flex-col bg-main-300">
+    <div className="w-full h-screen flex flex-col bg-main-300 relative">
       <div className="w-full h-full flex flex-auto">
         <div className="w-[240px] flex-none">
           <SidebarLeft />
         </div>
-        <div className="flex-auto">
+        <div className="flex-auto overflow-hidden">
           <div className="h-[70px] px-[59px] flex items-center mb-5">
             <Header />
           </div>
@@ -18,7 +18,7 @@ const Public = () => {
           <SidebarRight />
         </div>
       </div>
-      <div className="flex-none h-[90px]">
+      <div className="h-[90px] fixed bottom-0 left-0 right-0 z-10 w-full">
         <Player />
       </div>
     </div>

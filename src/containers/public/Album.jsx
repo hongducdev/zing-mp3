@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as api from "../../api";
 import moment from "moment";
+import ListSong from "../../components/ListSong";
 
 const Album = () => {
   const { title, pid } = useParams();
@@ -10,7 +11,7 @@ const Album = () => {
   useEffect(() => {
     const fetchDetailPlaylist = async () => {
       const response = await api.apiGetDetailPlaylist(pid);
-      console.log("🚀 ~ fetchDetailPlaylist ~ response:", response);
+      // console.log("🚀 ~ fetchDetailPlaylist ~ response:", response);
       if (response.data.err === 0) {
         setDetailPlaylist(response.data.data);
       }
@@ -38,13 +39,22 @@ const Album = () => {
           </span>
           <span className="">{detailPlaylist?.artistsNames}</span>
           <span className="">
-            {
-              Math.round(detailPlaylist.like / 1000) + "K người yêu thích"
-            }
+            {Math.round(detailPlaylist.like / 1000) + "K người yêu thích"}
           </span>
         </div>
       </div>
-      <div className="flex-auto">playlist</div>
+      <div className="flex-auto flex flex-col overflow-y-auto">
+        <span className="text-sm mb-3">
+          <span className="text-gray-400">Lời tựa</span>{" "}
+          {detailPlaylist?.description}
+        </span>
+        <div>
+          <ListSong
+            songs={detailPlaylist?.song?.items}
+            totalDuration={detailPlaylist?.song?.totalDuration}
+          />
+        </div>
+      </div>
     </div>
   );
 };
