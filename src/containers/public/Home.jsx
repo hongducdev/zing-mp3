@@ -1,4 +1,4 @@
-import { Header } from "../../components";
+import { Header, Slide } from "../../components";
 import * as api from "../../api";
 import { useEffect } from "react";
 
@@ -17,6 +17,7 @@ const Home = () => {
       <div className="h-[70px] px-[59px] flex items-center">
         <Header />
       </div>
+      <Slide />
     </div>
   );
 };
