@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import * as api from "../api";
@@ -24,8 +25,8 @@ const Player = () => {
   useEffect(() => {
     const fetchDetailSong = async () => {
       const [res1, res2] = await Promise.all([
-        api.getDetailSong(curSongId),
-        api.getSong(curSongId),
+        api.apiGetDetailSong(curSongId),
+        api.apiGetSong(curSongId),
       ]);
       if (res1.data.err === 0) setSongInfo(res1.data.data);
       if (res2.data.err === 0) setSourceSong(res2.data.data["128"]);
@@ -33,9 +34,7 @@ const Player = () => {
     fetchDetailSong();
   }, [curSongId]);
 
-  useEffect(() => {
-
-  }, [sourceSong]);
+  useEffect(() => {}, [sourceSong]);
 
   const handleTogglePlay = () => {
     // setIsPlaying(!isPlaying);
