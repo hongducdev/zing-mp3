@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as api from "../api";
 import icons from "../utils/icons";
+import { useDispatch } from "react-redux";
+import * as actions from "../store/actions";
 
 const {
   AiFillHeart,
@@ -17,10 +19,13 @@ const {
 } = icons;
 
 const Player = () => {
+  const dispatch = useDispatch();
   const { curSongId, isPlaying } = useSelector((state) => state.music);
   const [songInfo, setSongInfo] = useState({});
   const [sourceSong, setSourceSong] = useState(null);
   // const [isPlay, setIsPlay] = useState(false);
+
+  const audioEl = useRef(new Audio());
 
   useEffect(() => {
     const fetchDetailSong = async () => {
@@ -29,15 +34,28 @@ const Player = () => {
         api.apiGetSong(curSongId),
       ]);
       if (res1.data.err === 0) setSongInfo(res1.data.data);
-      if (res2.data.err === 0) setSourceSong(res2.data.data["128"]);
+      if (res2.data.err === 0) {
+        setSourceSong(res2.data.data["128"]);
+      }
     };
     fetchDetailSong();
   }, [curSongId]);
 
-  useEffect(() => {}, [sourceSong]);
+  useEffect(() => {
+    audioEl.current.pause();
+    audioEl.current.src = sourceSong;
+    audioEl.current.load();
+    if (isPlaying) audioEl.current.play();
+  }, [sourceSong, curSongId]);
 
   const handleTogglePlay = () => {
-    // setIsPlaying(!isPlaying);
+    if (isPlaying) {
+      audioEl.current.pause();
+      dispatch(actions.play(false));
+    } else {
+      audioEl.current.play();
+      dispatch(actions.play(true));
+    }
   };
 
   return (

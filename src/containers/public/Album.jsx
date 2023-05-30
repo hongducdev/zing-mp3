@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import * as api from "../../api";
 import moment from "moment";
 import ListSong from "../../components/ListSong";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
 const Album = () => {
   const { title, pid } = useParams();
@@ -20,7 +21,7 @@ const Album = () => {
   }, [title, pid]);
 
   return (
-    <div className="flex gap-8 w-full px-[59px]">
+    <div className="flex gap-8 w-full h-full px-[59px]">
       <div className="flex-none w-1/4">
         <img
           src={detailPlaylist?.thumbnail}
@@ -43,18 +44,20 @@ const Album = () => {
           </span>
         </div>
       </div>
-      <div className="flex-auto flex flex-col overflow-y-auto">
-        <span className="text-sm mb-3">
-          <span className="text-gray-400">Lời tựa</span>{" "}
-          {detailPlaylist?.description}
-        </span>
-        <div>
-          <ListSong
-            songs={detailPlaylist?.song?.items}
-            totalDuration={detailPlaylist?.song?.totalDuration}
-          />
+      <Scrollbars style={{ width: "100%", height: "80%" }}>
+        <div className="flex-auto flex flex-col overflow-y-auto">
+          <span className="text-sm mb-3">
+            <span className="text-gray-400">Lời tựa</span>{" "}
+            {detailPlaylist?.description}
+          </span>
+          <div>
+            <ListSong
+              songs={detailPlaylist?.song?.items}
+              totalDuration={detailPlaylist?.song?.totalDuration}
+            />
+          </div>
         </div>
-      </div>
+      </Scrollbars>
     </div>
   );
 };

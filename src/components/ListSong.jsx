@@ -20,7 +20,7 @@ const ListSong = ({ songs, totalDuration }) => {
           <ListItem key={song.encodeId} songData={song} />
         ))}
       </div>
-      <span className="text-gray-500">
+      <span className="text-gray-500 mt-4">
         {songs?.length} bài hát • {hour} giờ {minute} phút
       </span>
     </div>
