@@ -1,12 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+import { useSelector } from "react-redux";
 import ListItem from "./ListItem";
 import { memo } from "react";
 
-const ListSong = ({ songs, totalDuration }) => {
+const ListSong = ({ totalDuration }) => {
   const hour = Math.floor(totalDuration / 3600);
   const minute = Math.floor((totalDuration - hour * 3600) / 60);
+
+  const { songs } = useSelector((state) => state.music);
 
   return (
     <div className="w-full flex flex-col text-xs">

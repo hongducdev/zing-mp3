@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
@@ -22,14 +23,16 @@ const {
 
 const Player = () => {
   const dispatch = useDispatch();
-  const { curSongId, isPlaying } = useSelector((state) => state.music);
+  const { curSongId, isPlaying, songs } = useSelector((state) => state.music);
   const [songInfo, setSongInfo] = useState({});
   const [curTime, setCurTime] = useState(0);
   const [audio, setAudio] = useState(new Audio());
   const [error, setError] = useState(null);
+  const [isShuffle, setIsShuffle] = useState(false);
 
   const thumbRef = useRef(null);
-  let intervalId;
+  const trackRef = useRef(null);
+  var intervalId;
 
   useEffect(() => {
     const fetchDetailSong = async () => {
@@ -39,40 +42,34 @@ const Player = () => {
       ]);
       if (res1.data.err === 0) {
         setSongInfo(res1.data.data);
-      } else setError(res1.data.msg);
+        setCurTime(0);
+      }
       if (res2.data.err === 0) {
         audio.pause();
         setAudio(new Audio(res2.data.data["128"]));
       } else {
-        setError(res2.data.msg);
+        audio.pause();
+        toast.error(res2.data.msg);
+        setAudio(new Audio());
+        dispatch(actions.play(false));
+        setCurTime(0);
       }
     };
     fetchDetailSong();
   }, [curSongId]);
 
-  // send error
   useEffect(() => {
-    toast.error(error);
-    console.log(error);
-  }, [error]);
-
-  // duration
-  useEffect(() => {
+    intervalId && clearInterval(intervalId);
+    audio.pause();
+    audio.load();
     if (isPlaying) {
+      audio.play();
       intervalId = setInterval(() => {
         let percent = Math.round((audio.currentTime / audio.duration) * 100);
         thumbRef.current.style.right = `${100 - percent}%`;
         setCurTime(Math.round(audio.currentTime));
-      }, 1000);
-    } else {
-      intervalId && clearInterval(intervalId);
+      }, 200);
     }
-  }, [songInfo, isPlaying]);
-
-  useEffect(() => {
-    audio.pause();
-    audio.load();
-    if (isPlaying) audio.play();
   }, [audio]);
 
   const handleTogglePlay = () => {
@@ -85,13 +82,49 @@ const Player = () => {
     }
   };
 
+  const handleClickProgress = (e) => {
+    const trackRect = trackRef.current.getBoundingClientRect();
+    const percent =
+      Math.round(((e.clientX - trackRect.left) * 10000) / trackRect.width) /
+      100;
+    thumbRef.current.style.right = `${100 - percent}%`;
+    audio.currentTime = (percent * songInfo.duration) / 100;
+    setCurTime(Math.round(audio.currentTime));
+  };
+
+  const handlePrevSong = () => {
+    if (songs) {
+      let curSongIndex;
+      songs.forEach((song, index) => {
+        if (song.encodeId === curSongId) curSongIndex = index;
+      });
+      dispatch(actions.setCurSongId(songs[curSongIndex - 1].encodeId));
+      dispatch(actions.play(true));
+    }
+  };
+
+  const handleNextSong = () => {
+    if (songs) {
+      let curSongIndex;
+      songs.forEach((song, index) => {
+        if (song.encodeId === curSongId) curSongIndex = index;
+      });
+      dispatch(actions.setCurSongId(songs[curSongIndex + 1].encodeId));
+      dispatch(actions.play(true));
+    }
+  };
+
+  const handleToggleShuffle = () => {
+    setIsShuffle(!isShuffle);
+  }
+
   return (
     <div className="bg-main-400 h-full px-5 flex items-center">
       <div className="w-[30%] flex-auto flex items-center gap-6">
         <div className="flex items-center gap-[10px]">
           <img
             src={songInfo?.thumbnailM}
-            alt="thumnail"
+            alt="thumbnail"
             className="w-16 h-16 rounded-[4px] object-cover"
           />
           <div className="flex flex-col">
@@ -114,10 +147,20 @@ const Player = () => {
       </div>
       <div className="w-[40%] flex-auto flex items-center flex-col">
         <div className="flex items-center gap-4 justify-center mb-3">
-          <span className="p-1 cursor-pointer">
+          <span
+            className={`p-1 cursor-pointer ${
+              isShuffle ? "text-main-500" : "text-black"
+            }`}
+            onClick={handleToggleShuffle}
+          >
             <CiShuffle size={24} />
           </span>
-          <span className="p-1 cursor-pointer">
+          <span
+            className={`p-1 ${
+              !songs ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+            }`}
+            onClick={handlePrevSong}
+          >
             <BiSkipPrevious size={24} />
           </span>
           <span
@@ -126,7 +169,12 @@ const Player = () => {
           >
             {isPlaying ? <BsPauseFill size={24} /> : <BsPlayFill size={24} />}
           </span>
-          <span className="p-1 cursor-pointer">
+          <span
+            className={`p-1 ${
+              !songs ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+            }`}
+            onClick={handleNextSong}
+          >
             <BiSkipNext size={24} />
           </span>
           <span className="p-1 cursor-pointer">
@@ -137,9 +185,13 @@ const Player = () => {
           <span className="">
             {moment(curTime * 1000).format("mm:ss") || "00:00"}
           </span>
-          <div className="w-4/5 h-[3px] bg-main-200 mx-auto relative rounded-full">
+          <div
+            className="w-4/5 h-[3px] hover:h-[6px] bg-main-200 mx-auto relative rounded-full cursor-pointer"
+            onClick={handleClickProgress}
+            ref={trackRef}
+          >
             <div
-              className="absolute rounded-full bg-main-500 h-full top-0 left-0"
+              className="absolute rounded-full bg-main-500 h-full top-0 left-0 bottom-0"
               ref={thumbRef}
             ></div>
           </div>
