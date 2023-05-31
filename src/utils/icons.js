@@ -1,4 +1,8 @@
-import { MdOutlineLibraryMusic, MdOutlineFeed } from "react-icons/md";
+import {
+  MdOutlineLibraryMusic,
+  MdOutlineFeed,
+  MdKeyboardArrowRight,
+} from "react-icons/md";
 import { TbChartArcs } from "react-icons/tb";
 import { HiOutlineChartPie } from "react-icons/hi";
 import {
@@ -35,6 +39,7 @@ const icons = {
   BiSkipNext,
   BiSkipPrevious,
   IoMusicalNotesOutline,
+  MdKeyboardArrowRight,
 };
 
 export default icons;

@@ -29,6 +29,7 @@ const Player = () => {
   const [audio, setAudio] = useState(new Audio());
   const [error, setError] = useState(null);
   const [isShuffle, setIsShuffle] = useState(false);
+  const [isRepeat, setIsRepeat] = useState(false);
 
   const thumbRef = useRef(null);
   const trackRef = useRef(null);
@@ -71,6 +72,24 @@ const Player = () => {
       }, 200);
     }
   }, [audio]);
+
+  useEffect(() => {
+    const handleEnded = () => {
+      if (isShuffle) {
+        handleToggleShuffle();
+      } else if (isRepeat) {
+        handleNextSong();
+      } else {
+        audio.pause();
+        dispatch(actions.play(false));
+      }
+    };
+    audio.addEventListener("ended", handleEnded);
+
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [audio, isShuffle, isRepeat]);
 
   const handleTogglePlay = () => {
     if (isPlaying) {
@@ -116,7 +135,12 @@ const Player = () => {
 
   const handleToggleShuffle = () => {
     setIsShuffle(!isShuffle);
-  }
+    const randomIndex = Math.round(Math.random() * songs?.length) - 1;
+    dispatch(actions.setCurSongId(songs[randomIndex].encodeId));
+    dispatch(actions.play(true));
+  };
+
+  // const handleToggleRepeat = () => {};
 
   return (
     <div className="bg-main-400 h-full px-5 flex items-center">
@@ -151,7 +175,7 @@ const Player = () => {
             className={`p-1 cursor-pointer ${
               isShuffle ? "text-main-500" : "text-black"
             }`}
-            onClick={handleToggleShuffle}
+            onClick={() => setIsShuffle(!isShuffle)}
           >
             <CiShuffle size={24} />
           </span>
@@ -177,7 +201,12 @@ const Player = () => {
           >
             <BiSkipNext size={24} />
           </span>
-          <span className="p-1 cursor-pointer">
+          <span
+            className={`p-1 cursor-pointer ${
+              isRepeat ? "text-main-500" : "text-black"
+            }`}
+            onClick={() => setIsRepeat(!isRepeat)}
+          >
             <CiRepeat size={24} />
           </span>
         </div>
