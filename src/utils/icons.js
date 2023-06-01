@@ -13,9 +13,11 @@ import {
 } from "react-icons/ai";
 import { BiSearch, BiDotsHorizontalRounded } from "react-icons/bi";
 import {
-
+  BsMusicNoteList,
   BsPlayFill,
   BsPauseFill,
+  BsVolumeDown,
+  BsVolumeMute,
 } from "react-icons/bs";
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi";
 import { CiShuffle, CiRepeat } from "react-icons/ci";
@@ -42,6 +44,9 @@ const icons = {
   IoMusicalNotesOutline,
   MdKeyboardArrowRight,
   RiRepeatOneLine,
+  BsMusicNoteList,
+  BsVolumeDown,
+  BsVolumeMute,
 };
 
 export default icons;

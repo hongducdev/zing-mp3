@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useSelector } from "react-redux";
@@ -8,6 +9,7 @@ import { useDispatch } from "react-redux";
 import * as actions from "../store/actions";
 import { toast } from "react-toastify";
 import moment from "moment";
+import LoadingSong from "./LoadingSong";
 
 const {
   AiFillHeart,
@@ -20,9 +22,12 @@ const {
   BiSkipNext,
   BiSkipPrevious,
   RiRepeatOneLine,
+  BsMusicNoteList,
+  BsVolumeDown,
+  BsVolumeMute,
 } = icons;
 
-const Player = () => {
+const Player = ({ setIsShowSidebarRight }) => {
   const dispatch = useDispatch();
   const { curSongId, isPlaying, songs } = useSelector((state) => state.music);
   const [songInfo, setSongInfo] = useState({});
@@ -31,6 +36,8 @@ const Player = () => {
   const [error, setError] = useState(null);
   const [isShuffle, setIsShuffle] = useState(false);
   const [repeatMode, setRepeatMode] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [volume, setVolume] = useState(100);
 
   const thumbRef = useRef(null);
   const trackRef = useRef(null);
@@ -38,6 +45,7 @@ const Player = () => {
 
   useEffect(() => {
     const fetchDetailSong = async () => {
+      setIsLoading(true);
       const [res1, res2] = await Promise.all([
         api.apiGetDetailSong(curSongId),
         api.apiGetSong(curSongId),
@@ -45,6 +53,7 @@ const Player = () => {
       if (res1.data.err === 0) {
         setSongInfo(res1.data.data);
         setCurTime(0);
+        setIsLoading(false);
       }
       if (res2.data.err === 0) {
         audio.pause();
@@ -145,6 +154,21 @@ const Player = () => {
     audio.play();
   };
 
+  const handleChangeVolume = (e) => {
+    setVolume(e.target.value);
+    audio.volume = e.target.value / 100;
+  };
+
+  const handleToggleMute = () => {
+    if (audio.volume) {
+      setVolume(0);
+      audio.volume = 0;
+    } else {
+      setVolume(100);
+      audio.volume = 1;
+    }
+  }
+
   return (
     <div className="bg-main-400 h-full px-5 flex items-center">
       <div className="w-[30%] flex-auto flex items-center gap-6">
@@ -194,7 +218,13 @@ const Player = () => {
             className="p-1 cursor-pointer w-[40px] h-[40px] rounded-full flex items-center justify-center border border-gray-500 hover:text-main-500"
             onClick={handleTogglePlay}
           >
-            {isPlaying ? <BsPauseFill size={24} /> : <BsPlayFill size={24} />}
+            {isLoading ? (
+              <LoadingSong />
+            ) : isPlaying ? (
+              <BsPauseFill size={24} />
+            ) : (
+              <BsPlayFill size={24} />
+            )}
           </span>
           <span
             className={`p-1 ${
@@ -236,7 +266,29 @@ const Player = () => {
           </span>
         </div>
       </div>
-      <div className="w-[30%] flex-auto">detail</div>
+      <div className="w-[30%] flex justify-end items-center gap-4">
+        <span className="cursor-pointer" onClick={
+          handleToggleMute
+        }>
+          {
+            +volume ? <BsVolumeDown size={26} /> : <BsVolumeMute size={26} />
+          }
+        </span>
+        <input
+          type="range"
+          step={1}
+          min={0}
+          max={100}
+          value={volume}
+          onChange={handleChangeVolume}
+        />
+        <span
+          className="p-2 rounded bg-main-500 cursor-pointer"
+          onClick={() => setIsShowSidebarRight((prev) => !prev)}
+        >
+          <BsMusicNoteList size={16} />
+        </span>
+      </div>
     </div>
   );
 };

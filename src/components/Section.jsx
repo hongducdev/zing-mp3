@@ -28,7 +28,7 @@ const Section = () => {
         {day &&
           day?.items?.slice(0, 5).map((item) => (
             <div
-              className="flex flex-col gap-3 flex-auto w-1/5 cursor-pointer"
+              className="flex flex-col gap-3 flex-auto w-1/5 cursor-pointer h-auto"
               key={item.encodeId}
               onClick={() => handleClick(item)}
             >
