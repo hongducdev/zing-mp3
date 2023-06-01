@@ -19,6 +19,7 @@ const {
   BsPauseFill,
   BiSkipNext,
   BiSkipPrevious,
+  RiRepeatOneLine,
 } = icons;
 
 const Player = () => {
@@ -29,7 +30,7 @@ const Player = () => {
   const [audio, setAudio] = useState(new Audio());
   const [error, setError] = useState(null);
   const [isShuffle, setIsShuffle] = useState(false);
-  const [isRepeat, setIsRepeat] = useState(false);
+  const [repeatMode, setRepeatMode] = useState(0);
 
   const thumbRef = useRef(null);
   const trackRef = useRef(null);
@@ -77,8 +78,8 @@ const Player = () => {
     const handleEnded = () => {
       if (isShuffle) {
         handleToggleShuffle();
-      } else if (isRepeat) {
-        handleNextSong();
+      } else if (repeatMode) {
+        repeatMode === 1 ? handleRepeatOne() : handleNextSong();
       } else {
         audio.pause();
         dispatch(actions.play(false));
@@ -89,7 +90,7 @@ const Player = () => {
     return () => {
       audio.removeEventListener("ended", handleEnded);
     };
-  }, [audio, isShuffle, isRepeat]);
+  }, [audio, isShuffle, repeatMode]);
 
   const handleTogglePlay = () => {
     if (isPlaying) {
@@ -140,7 +141,9 @@ const Player = () => {
     dispatch(actions.play(true));
   };
 
-  // const handleToggleRepeat = () => {};
+  const handleRepeatOne = () => {
+    audio.play();
+  };
 
   return (
     <div className="bg-main-400 h-full px-5 flex items-center">
@@ -203,11 +206,15 @@ const Player = () => {
           </span>
           <span
             className={`p-1 cursor-pointer ${
-              isRepeat ? "text-main-500" : "text-black"
+              repeatMode ? "text-main-500" : "text-black"
             }`}
-            onClick={() => setIsRepeat(!isRepeat)}
+            onClick={() => setRepeatMode((repeatMode + 1) % 3)}
           >
-            <CiRepeat size={24} />
+            {repeatMode === 1 ? (
+              <RiRepeatOneLine size={24} />
+            ) : (
+              <CiRepeat size={24} />
+            )}
           </span>
         </div>
         <div className="w-full flex items-center justify-center text-xs">
