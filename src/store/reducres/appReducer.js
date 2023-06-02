@@ -2,7 +2,11 @@ import actionType from "../actions/actionType";
 
 const initState = {
   banner: [],
-  day: [],
+  day: {},
+  newEveryDay: {},
+  top100: {},
+  album: {},
+  isLoading: false,
 };
 
 const appReducer = (state = initState, action) => {
@@ -16,7 +20,21 @@ const appReducer = (state = initState, action) => {
         day:
           action.homeData?.find((item) => item.sectionId === "hEditorTheme") ||
           {},
+        newEveryDay:
+          action.homeData?.find((item) => item.sectionId === "hEditorTheme2") ||
+          {},
+        top100:
+          action.homeData?.find((item) => item.sectionId === "h100") ||
+          {},
+        album:
+          action.homeData?.find((item) => item.sectionId === "hAlbum") ||
+          {},
       };
+    case actionType.LOADING:
+      return {
+        ...state,
+        isLoading: action.flag,
+      }
 
     default:
       return state;

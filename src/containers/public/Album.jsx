@@ -19,10 +19,11 @@ const Album = () => {
 
   useEffect(() => {
     const fetchDetailPlaylist = async () => {
+      dispatch(actions.loading(true));
       const response = await api.apiGetDetailPlaylist(pid);
-      // console.log("🚀 ~ fetchDetailPlaylist ~ response:", response);
       if (response.data.err === 0) {
         setDetailPlaylist(response.data.data);
+        dispatch(actions.loading(false));
         dispatch(actions.setPlaylist(response.data.data.song.items));
       }
     };
@@ -35,7 +36,7 @@ const Album = () => {
         <div className="relative">
           <img
             src={detailPlaylist?.thumbnail}
-            alt="thumnail"
+            alt="thumbnail"
             className={`w-full object-cover shadow-md ${
               isPlaying ? "rounded-full animate-spin" : "rounded-md"
             } `}
