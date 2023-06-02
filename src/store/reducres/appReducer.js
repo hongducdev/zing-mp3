@@ -6,6 +6,7 @@ const initState = {
   newEveryDay: {},
   top100: {},
   album: {},
+  newRelease: {},
   isLoading: false,
 };
 
@@ -24,10 +25,11 @@ const appReducer = (state = initState, action) => {
           action.homeData?.find((item) => item.sectionId === "hEditorTheme2") ||
           {},
         top100:
-          action.homeData?.find((item) => item.sectionId === "h100") ||
-          {},
+          action.homeData?.find((item) => item.sectionId === "h100") || {},
         album:
-          action.homeData?.find((item) => item.sectionId === "hAlbum") ||
+          action.homeData?.find((item) => item.sectionId === "hAlbum") || {},
+        newRelease:
+          action.homeData?.find((item) => item.sectionType === "new-release") ||
           {},
       };
     case actionType.LOADING:

@@ -67,7 +67,7 @@ const Album = () => {
           </span>
         </div>
       </div>
-      <Scrollbars style={{ width: "100%", height: "80%" }}>
+      <Scrollbars style={{ width: "100%", height: "80%" }} autoHide>
         <div className="flex-auto flex flex-col overflow-y-auto">
           <span className="text-sm mb-3">
             <span className="text-gray-400">Lời tựa</span>{" "}

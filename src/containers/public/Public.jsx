@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 const Public = () => {
   const [isShowSidebarRight, setIsShowSidebarRight] = useState(false);
-  const {isLoading} = useSelector((state) => state.app);
+  const { isLoading } = useSelector((state) => state.app);
 
   return (
     <div className="w-full h-screen flex flex-col bg-main-300 relative">
@@ -31,6 +31,7 @@ const Public = () => {
           </div>
           <div className="flex-auto w-full">
             <Scrollbars
+              autoHide
               style={{
                 width: "100%",
                 height: "100%",
