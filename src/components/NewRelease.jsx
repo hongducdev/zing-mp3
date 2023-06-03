@@ -64,9 +64,8 @@ const NewRelease = () => {
         </button>
       </div>
       <div className="flex flex-wrap">
-        {songs.map((item) => (
-          <SongItem key={item.encodeId} item={item} />
-        ))}
+        {
+          songs?.map((item) => <SongItem key={item.encodeId} item={item} />)}
       </div>
     </div>
   );

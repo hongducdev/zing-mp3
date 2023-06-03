@@ -1,28 +1,35 @@
 import { NewRelease, Section, Slider } from "../../components";
-import * as api from "../../api";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  useEffect(() => {
-    const fetchDataHome = async () => {
-      const response = await api.apiGetHome();
-      console.log("🚀 ~ fetchDataHome ~ response:", response);
-    };
-    fetchDataHome();
-  }, []);
-
-  const { day, newEveryDay, top100, album } = useSelector((state) => state.app);
+  const { weekChart, playlist } = useSelector(
+    (state) => state.app
+  );
+  console.log("🚀 ~ Home ~ playlist:", playlist);
 
   return (
     <div className="overflow-y-auto">
       <div className="w-full">
         <Slider />
-        <Section data={newEveryDay} />
-        <Section data={day} />
+        {
+          playlist?.map((item) => (
+            <Section data={item} key={item.title} />
+          ))
+        }
         <NewRelease />
-        <Section data={top100} />
-        <Section data={album} />
+        <div className="flex items-center px-[59px] w-full my-12 gap-4">
+          {weekChart?.map((item) => (
+            <Link key={item.link} to={item.link.split(".")[0]} className="">
+              <img
+                src={item?.banner}
+                alt="cover"
+                className="w-full object-cover rounded-md"
+              />
+            </Link>
+          ))}
+        </div>
+        <div className="w-full h-[500px]"></div>
       </div>
     </div>
   );

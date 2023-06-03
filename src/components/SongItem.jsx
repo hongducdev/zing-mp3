@@ -6,14 +6,23 @@ import "moment/locale/vi";
 import icons from "../utils/icons";
 import AudioLoading from "./AudioLoading";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import * as actions from "../store/actions";
 
 const { BsPlayFill } = icons;
 
 const SongItem = ({ item }) => {
+  const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.music);
 
   return (
-    <div className="w-[30%] flex-auto flex items-center gap-[10px] p-[10px] rounded-md cursor-pointer group hover:bg-main-200">
+    <div
+      className="w-[45%] lg:w-[30%] flex-auto flex items-center gap-[10px] p-[10px] rounded-md cursor-pointer group hover:bg-main-200"
+      onClick={() => {
+        dispatch(actions.setCurSongId(item?.encodedId));
+        dispatch(actions.play(true));
+      }}
+    >
       <div className="relative">
         <img
           src={item?.thumbnailM}

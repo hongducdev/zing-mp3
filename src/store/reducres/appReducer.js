@@ -2,12 +2,10 @@ import actionType from "../actions/actionType";
 
 const initState = {
   banner: [],
-  day: {},
-  newEveryDay: {},
-  top100: {},
-  album: {},
   newRelease: {},
   isLoading: false,
+  weekChart: {},
+  playlist: [],
 };
 
 const appReducer = (state = initState, action) => {
@@ -18,25 +16,20 @@ const appReducer = (state = initState, action) => {
         banner:
           action.homeData?.find((item) => item.sectionType === "banner")
             ?.items || null,
-        day:
-          action.homeData?.find((item) => item.sectionId === "hEditorTheme") ||
-          {},
-        newEveryDay:
-          action.homeData?.find((item) => item.sectionId === "hEditorTheme2") ||
-          {},
-        top100:
-          action.homeData?.find((item) => item.sectionId === "h100") || {},
-        album:
-          action.homeData?.find((item) => item.sectionId === "hAlbum") || {},
         newRelease:
           action.homeData?.find((item) => item.sectionType === "new-release") ||
           {},
+        weekChart:
+          action.homeData?.find((item) => item.sectionType === "weekChart")
+            ?.items || {},
+        playlist:
+          action.homeData?.filter((item) => item.sectionType === "playlist") || [],
       };
     case actionType.LOADING:
       return {
         ...state,
         isLoading: action.flag,
-      }
+      };
 
     default:
       return state;

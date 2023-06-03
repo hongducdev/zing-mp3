@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import * as api from "../../api";
 import moment from "moment";
 import ListSong from "../../components/ListSong";
@@ -13,6 +13,7 @@ const { BsPlayFill } = icons;
 
 const Album = () => {
   const { title, pid } = useParams();
+  const location = useLocation();
   const { isPlaying } = useSelector((state) => state.music);
   const [detailPlaylist, setDetailPlaylist] = useState({});
   const dispatch = useDispatch();
@@ -29,6 +30,14 @@ const Album = () => {
     };
     fetchDetailPlaylist();
   }, [title, pid]);
+
+  useEffect(() => {
+    if(location.state.playAlbum) {
+      const random = Math.floor(Math.random() * detailPlaylist?.song?.items?.length) - 1;
+      dispatch(actions.setCurSongId(detailPlaylist?.song?.items[random]?.encodedId));
+      dispatch(actions.play(true));
+    }
+  }, [pid, detailPlaylist]);
 
   return (
     <div className="flex gap-8 w-full h-full px-[59px]">
