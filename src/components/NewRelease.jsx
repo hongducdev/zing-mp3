@@ -8,6 +8,7 @@ const { MdKeyboardArrowRight } = icons;
 
 const NewRelease = () => {
   const { newRelease } = useSelector((state) => state.app);
+  console.log("🚀 ~ NewRelease ~ newRelease:", newRelease)
   const [isActive, setIsActive] = useState(0);
   const [songs, setSongs] = useState([]);
 
@@ -64,8 +65,17 @@ const NewRelease = () => {
         </button>
       </div>
       <div className="flex flex-wrap">
-        {
-          songs?.map((item) => <SongItem key={item.encodeId} item={item} />)}
+        {songs?.map((item) => (
+          <div className="w-[45%] lg:w-[30%]" key={item.encodeId}>
+            <SongItem
+              thumbnail={item.thumbnailM}
+              title={item?.title}
+              sid={item?.encodeId}
+              releaseDate={item?.releaseDate}
+              artists={item?.artistsNames}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

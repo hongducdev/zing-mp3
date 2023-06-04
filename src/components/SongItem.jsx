@@ -11,35 +11,59 @@ import * as actions from "../store/actions";
 
 const { BsPlayFill } = icons;
 
-const SongItem = ({ item }) => {
+const SongItem = ({
+  thumbnail,
+  title,
+  artists,
+  sid,
+  releaseDate,
+  order,
+  percent,
+}) => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.music);
 
   return (
     <div
-      className="w-[45%] lg:w-[30%] flex-auto flex items-center gap-[10px] p-[10px] rounded-md cursor-pointer group hover:bg-main-200"
+      className={`w-full flex-auto flex items-center gap-[10px] p-[10px] rounded-md cursor-pointer group hover:bg-main-200 ${
+        order
+          ? "text-white bg-white bg-opacity-10 hover:bg-opacity-30 py-[10px] px-4"
+          : ""
+      } `}
       onClick={() => {
-        dispatch(actions.setCurSongId(item?.encodedId));
+        dispatch(actions.setCurSongId(sid));
         dispatch(actions.play(true));
       }}
     >
-      <div className="relative">
-        <img
-          src={item?.thumbnailM}
-          alt="thumbnail"
-          className="w-[60px] h-[60px] rounded"
-        />
-        <div className="bg-black bg-opacity-30 rounded text-white w-full h-full inset-0 absolute items-center justify-center hidden group-hover:flex">
-          {isLoading ? <AudioLoading /> : <BsPlayFill size={24} />}
+      {order && <span className="text-3xl font-bold pr-2">{order}</span>}
+      <div className="flex items-center gap-[10px]">
+        <div className="relative">
+          <img
+            src={thumbnail}
+            alt="thumbnail"
+            className="w-[60px] h-[60px] rounded"
+          />
+          <div className="bg-black bg-opacity-30 rounded text-white w-full h-full inset-0 absolute items-center justify-center hidden group-hover:flex">
+            {isLoading ? <AudioLoading /> : <BsPlayFill size={24} />}
+          </div>
+        </div>
+        <div className="">
+          <h3 className="text-sm font-medium">{title}</h3>
+          <p className={`text-xs ${order ? "text-gray-300" : "text-gray-500"}`}>
+            {artists}
+          </p>
+          {releaseDate && (
+            <span className="text-xs text-gray-500">
+              {moment(releaseDate * 1000).fromNow()}
+            </span>
+          )}
         </div>
       </div>
-      <div className="">
-        <h3 className="text-sm font-medium">{item?.title}</h3>
-        <p className="text-xs text-gray-500">{item?.artistsNames}</p>
-        <span className="text-xs text-gray-500">
-          {moment(item?.releaseDate * 1000).fromNow()}
+      {percent && (
+        <span className="t text-white text-base font-bold ml-auto">
+          {percent}%
         </span>
-      </div>
+      )}
     </div>
   );
 };

@@ -1,25 +1,20 @@
-import { NewRelease, Section, Slider } from "../../components";
+import { ChartSection, NewRelease, Section, Slider } from "../../components";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const { weekChart, playlist } = useSelector(
-    (state) => state.app
-  );
-  console.log("🚀 ~ Home ~ playlist:", playlist);
+  const { weekChart, playlist } = useSelector((state) => state.app);
 
   return (
     <div className="overflow-y-auto">
       <div className="w-full">
         <Slider />
-        {
-          playlist?.map((item) => (
-            <Section data={item} key={item.title} />
-          ))
-        }
+        {playlist?.map((item) => (
+          <Section data={item} key={item.title} />
+        ))}
         <NewRelease />
         <div className="flex items-center px-[59px] w-full my-12 gap-4">
-          {weekChart?.map((item) => (
+          {/* {weekChart?.map((item) => (
             <Link key={item.link} to={item.link.split(".")[0]} className="">
               <img
                 src={item?.banner}
@@ -27,8 +22,9 @@ const Home = () => {
                 className="w-full object-cover rounded-md"
               />
             </Link>
-          ))}
+          ))} */}
         </div>
+        <ChartSection />
         <div className="w-full h-[500px]"></div>
       </div>
     </div>

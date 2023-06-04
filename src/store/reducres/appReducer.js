@@ -6,6 +6,8 @@ const initState = {
   isLoading: false,
   weekChart: {},
   playlist: [],
+  chart: {},
+  rank: [],
 };
 
 const appReducer = (state = initState, action) => {
@@ -23,7 +25,14 @@ const appReducer = (state = initState, action) => {
           action.homeData?.find((item) => item.sectionType === "weekChart")
             ?.items || {},
         playlist:
-          action.homeData?.filter((item) => item.sectionType === "playlist") || [],
+          action.homeData?.filter((item) => item.sectionType === "playlist") ||
+          [],
+        chart:
+          action.homeData?.find((item) => item.sectionType === "RTChart")
+            .chart || {},
+        rank:
+          action.homeData?.find((item) => item.sectionType === "RTChart")
+            ?.items || [],
       };
     case actionType.LOADING:
       return {
