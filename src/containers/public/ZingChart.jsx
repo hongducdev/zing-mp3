@@ -1,15 +1,12 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react-refresh/only-export-components */
-import { memo, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import { Chart } from "chart.js/auto";
-import { useSelector } from "react-redux";
-import SongItem from "./SongItem";
 import _ from "lodash";
-import { Link } from "react-router-dom";
-import path from "../utils/path";
 
-const ChartSection = () => {
+const ZingChart = () => {
+
   const { chart, rank } = useSelector((state) => state.app);
 
   const [data, setData] = useState(null);
@@ -27,13 +24,13 @@ const ChartSection = () => {
     scales: {
       y: {
         ticks: { display: false },
-        grid: { color: "rgba(255,255,255,0.1)", drawTicks: false },
+        grid: { color: "rgba(0,0,0,0.2)", drawTicks: false },
         min: chart?.minScore,
         max: chart?.maxScore,
         border: { dash: [3, 4] },
       },
       x: {
-        ticks: { color: "white" },
+        ticks: { color: "black" },
         grid: { color: "transparent" },
       },
     },
@@ -111,42 +108,20 @@ const ChartSection = () => {
 
   return (
     <div className="px-[59px] mt-12">
-      <div className="bg-[#41185e] p-5 rounded-lg flex flex-col gap-5 h-full">
-        <h3 className="text-3xl font-bold text-white">#zingchart</h3>
-        <div className="flex gap-7 flex-grow">
-          <div className="flex-4 flex flex-col w-full gap-[10px]">
-            {rank
-              ?.filter((i, index) => index < 3)
-              .map((item, index) => (
-                <SongItem
-                  key={item?.encodeId}
-                  thumbnail={item?.thumbnail}
-                  title={item?.title}
-                  artists={item?.artistsNames || []}
-                  sid={item?.encodeId}
-                  order={index + 1}
-                  percent={Math.round((+item.score * 100) / +chart?.totalScore)}
-                />
-              ))}
-              <div className="mt-3 text-center">
-                <Link to={path.ZINGCHART} className="text-white text-sm border border-white rounded-full px-6 py-2">
-                  Xem thêm
-                </Link>
-              </div>
-          </div>
-          <div className="flex-6 h-full relative">
-            {data && <Line data={data} options={options} ref={chartRef} />}
-            <div
-              className="tooltip"
-              style={{
-                opacity: tooltipState.opacity,
-                left: tooltipState.left,
-                top: tooltipState.top,
-                position: "absolute",
-              }}
-            >
-              <div
-                className={`flex items-center justify-between gap-1 max-w-[200px] p-1 rounded
+      <h3 className="text-[40px] font-bold">#zingchart</h3>
+      <div className="">
+        {data && <Line data={data} options={options} ref={chartRef} />}
+        <div
+          className="tooltip"
+          style={{
+            opacity: tooltipState.opacity,
+            left: tooltipState.left,
+            top: tooltipState.top,
+            position: "absolute",
+          }}
+        >
+          <div
+            className={`flex items-center justify-between gap-1 max-w-[200px] p-1 rounded
                 ${
                   chart && chart.items
                     ? selected === Object.keys(chart.items)[0]
@@ -157,38 +132,33 @@ const ChartSection = () => {
                     : ""
                 }
                 `}
-              >
-                <div className="flex items-center gap-2">
-                  <img
-                    src={rank?.find((i) => i?.encodeId === selected)?.thumbnail}
-                    alt=""
-                    className="w-10 rounded"
-                  />
-                  <div className="max-w-[80px] ">
-                    <h3 className="text-white text-sm font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
-                      {rank?.find((i) => i?.encodeId === selected)?.title}
-                    </h3>
-                    <p className="text-gray-200 text-xs whitespace-nowrap overflow-hidden text-ellipsis">
-                      {
-                        rank?.find((i) => i?.encodeId === selected)
-                          ?.artistsNames
-                      }
-                    </p>
-                  </div>
-                </div>
-                <span className="text-white text-sm font-semibold">
-                  {Math.round(
-                    (rank?.find((i) => i?.encodeId === selected)?.score * 100) /
-                      +chart?.totalScore
-                  ) + "%"}
-                </span>
+          >
+            <div className="flex items-center gap-2">
+              <img
+                src={rank?.find((i) => i?.encodeId === selected)?.thumbnail}
+                alt=""
+                className="w-10 rounded"
+              />
+              <div className="max-w-[80px] ">
+                <h3 className="text-white text-sm font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
+                  {rank?.find((i) => i?.encodeId === selected)?.title}
+                </h3>
+                <p className="text-gray-200 text-xs whitespace-nowrap overflow-hidden text-ellipsis">
+                  {rank?.find((i) => i?.encodeId === selected)?.artistsNames}
+                </p>
               </div>
             </div>
+            <span className="text-white text-sm font-semibold">
+              {Math.round(
+                (rank?.find((i) => i?.encodeId === selected)?.score * 100) /
+                  +chart?.totalScore
+              ) + "%"}
+            </span>
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default memo(ChartSection);
+export default ZingChart
