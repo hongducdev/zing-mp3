@@ -35,7 +35,21 @@ const SongItem = ({
         dispatch(actions.play(true));
       }}
     >
-      {order && <span className="text-3xl font-bold pr-2">{order}</span>}
+      {order && (
+        <span
+          className={`text-3xl font-bold pr-2
+      ${
+        order === 1
+          ? "text-[#4a90e2]"
+          : order === 2
+          ? "text-[#27bd9c]"
+          : "text-[#e35050]"
+      }
+      `}
+        >
+          {order}
+        </span>
+      )}
       <div className="flex items-center gap-[10px]">
         <div className="relative">
           <img
