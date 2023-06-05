@@ -1,16 +1,25 @@
 import icons from "../utils/icons";
-import * as api from "../api";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createSearchParams, useNavigate } from "react-router-dom";
+import * as actions from "../store/actions";
+import path from "../utils/path";
 
 const { BiSearch } = icons;
 
 const Search = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [keyword, setKeyword] = useState("");
 
   const handleSearch = async (e) => {
     if (e.key === "Enter") {
-      const response = await api.apiSearch(keyword);
-      console.log("🚀 ~ handleSearch ~ response:", response);
+      dispatch(actions.search(keyword));
+      navigate({
+        pathname: `${path.SEARCH}/${path.ALL}`,
+        search: createSearchParams({ q: keyword }).toString(),
+      });
     }
   };
 
