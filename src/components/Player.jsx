@@ -52,6 +52,7 @@ const Player = ({ setIsShowSidebarRight }) => {
       ]);
       if (res1.data.err === 0) {
         setSongInfo(res1.data.data);
+        dispatch(actions.setCurSongData(res1.data.data));
         setCurTime(0);
         setIsLoading(false);
       }

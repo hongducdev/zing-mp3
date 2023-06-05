@@ -8,14 +8,14 @@ import musicReducer from "./musicReducer";
 const commonConfig = {
   storage: storage,
   stateReconciler: autoMergeLevel2,
-}
+};
 
 const musicConfig = {
   ...commonConfig,
   key: "music",
-  whiteList: ["curSongId"],
+  whiteList: ["curSongId", "curSongData", "curAlbumId"],
   blacklist: [],
-}
+};
 
 const rootReducer = combineReducers({
   app: appReducer,

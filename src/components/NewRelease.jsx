@@ -8,7 +8,6 @@ const { MdKeyboardArrowRight } = icons;
 
 const NewRelease = () => {
   const { newRelease } = useSelector((state) => state.app);
-  console.log("🚀 ~ NewRelease ~ newRelease:", newRelease)
   const [isActive, setIsActive] = useState(0);
   const [songs, setSongs] = useState([]);
 

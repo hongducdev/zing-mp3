@@ -24,6 +24,17 @@ export const loading = (flag) => ({
   type: actionTypes.LOADING,
   flag,
 });
+
+export const setCurSongData = (data) => ({
+  type: actionTypes.SET_CUR_SONG_DATA,
+  data,
+})
+
+export const setCurAlbumId = (aid) => ({
+  type: actionTypes.SET_CUR_ALBUM_ID,
+  aid,
+})
+
 // export const fetchDetailPlaylist = (pid) => async (dispath) => {
 //   try {
 //     const response = await api.apiGetDetailPlaylist(pid)

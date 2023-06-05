@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const { weekChart, playlist } = useSelector((state) => state.app);
-  console.log("🚀 ~ Home ~ weekChart:", weekChart)
 
   return (
     <div className="overflow-y-auto">

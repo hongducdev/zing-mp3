@@ -19,6 +19,8 @@ const SongItem = ({
   releaseDate,
   order,
   percent,
+  sm,
+  style,
 }) => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.music);
@@ -29,7 +31,7 @@ const SongItem = ({
         order
           ? "text-white bg-white bg-opacity-10 hover:bg-opacity-30 py-[10px] px-4"
           : ""
-      } `}
+      } ${style} `}
       onClick={() => {
         dispatch(actions.setCurSongId(sid));
         dispatch(actions.play(true));
@@ -55,7 +57,9 @@ const SongItem = ({
           <img
             src={thumbnail}
             alt="thumbnail"
-            className="w-[60px] h-[60px] rounded"
+            className={`${
+              sm ? "w-[40px] h-[40px]" : "w-[60px] h-[60px]"
+            } rounded`}
           />
           <div className="bg-black bg-opacity-30 rounded text-white w-full h-full inset-0 absolute items-center justify-center hidden group-hover:flex">
             {isLoading ? <AudioLoading /> : <BsPlayFill size={24} />}
@@ -63,7 +67,7 @@ const SongItem = ({
         </div>
         <div className="">
           <h3 className="text-sm font-medium">{title}</h3>
-          <p className={`text-xs ${order ? "text-gray-300" : "text-gray-500"}`}>
+          <p className={`text-xs ${order && "text-gray-300"}`}>
             {artists}
           </p>
           {releaseDate && (

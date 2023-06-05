@@ -19,6 +19,7 @@ const Album = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(actions.setCurAlbumId(pid));
     const fetchDetailPlaylist = async () => {
       dispatch(actions.loading(true));
       const response = await api.apiGetDetailPlaylist(pid);
@@ -32,9 +33,12 @@ const Album = () => {
   }, [title, pid]);
 
   useEffect(() => {
-    if(location.state.playAlbum) {
-      const random = Math.floor(Math.random() * detailPlaylist?.song?.items?.length) - 1;
-      dispatch(actions.setCurSongId(detailPlaylist?.song?.items[random]?.encodedId));
+    if (location.state.playAlbum) {
+      const random =
+        Math.floor(Math.random() * detailPlaylist?.song?.items?.length) - 1;
+      dispatch(
+        actions.setCurSongId(detailPlaylist?.song?.items[random]?.encodedId)
+      );
       dispatch(actions.play(true));
     }
   }, [pid, detailPlaylist]);
