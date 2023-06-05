@@ -4,6 +4,9 @@ import {
   Home,
   Login,
   Public,
+  Search,
+  SearchAll,
+  SearchSong,
   WeekRank,
   ZingChart,
 } from "./containers/public";
@@ -28,6 +31,10 @@ const App = () => {
           <Route path={path.PLAYLIST__TITLE__PID} element={<Album />} />
           <Route path={path.WEEKRANK__TITLE__PID} element={<WeekRank />} />
           <Route path={path.ZINGCHART} element={<ZingChart />} />
+          <Route path={path.SEARCH} element={<Search />} >
+            <Route path={path.ALL} element={<SearchAll />} />
+            <Route path={path.SONG} element={<SearchSong />} />
+          </Route>
         </Route>
       </Routes>
     </div>
