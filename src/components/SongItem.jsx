@@ -35,6 +35,12 @@ const SongItem = ({
       onClick={() => {
         dispatch(actions.setCurSongId(sid));
         dispatch(actions.play(true));
+        dispatch(actions.setRecent({
+          thumbnail,
+          title,
+          artists,
+          sid,
+        }))
       }}
     >
       {order && (

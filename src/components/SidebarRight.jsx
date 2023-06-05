@@ -4,13 +4,14 @@ import { useSelector } from "react-redux";
 import SongItem from "./SongItem";
 import * as api from "../api";
 import Scrollbars from "react-custom-scrollbars-2";
+import { setCurSongId } from "../store/actions";
 
 const { RiDeleteBinLine } = icons;
 
 const SidebarRight = () => {
   const [isRecent, setIsRecent] = useState(false);
   const [playlist, setPlaylist] = useState(null);
-  const { curSongData, curAlbumId, isPlaying } = useSelector(
+  const { curSongData, curAlbumId, recentSongs, isPlaying } = useSelector(
     (state) => state.music
   );
 
@@ -21,10 +22,14 @@ const SidebarRight = () => {
         setPlaylist(response.data.data);
       }
     };
-    if ((curAlbumId, isPlaying)) {
+    if (curAlbumId) {
       fetchAlbum();
     }
-  }, [curAlbumId, isPlaying]);
+  }, [curAlbumId]);
+
+  useEffect(() => {
+    if (isPlaying) setIsRecent(false);
+  }, [isPlaying, setCurSongId]);
 
   return (
     <div className="flex flex-col text-xs w-full px-2">
@@ -58,23 +63,49 @@ const SidebarRight = () => {
           <RiDeleteBinLine size={20} />
         </span>
       </div>
-      <div className="flex flex-col">
-        <SongItem
-          thumbnail={curSongData?.thumbnailM}
-          title={curSongData?.title}
-          artists={curSongData?.artistsNames}
-          sid={curSongData?.sid}
-          sm
-          style="bg-main-500 text-white p-2"
-        />
-        <div className="mt-4 flex flex-col text-sm ">
-          <span className="font-bold">Tiếp theo</span>
-          <span className="">
-            Từ playlist{" "}
-            <span className="text-main-500 font-medium">{playlist?.title}</span>
-          </span>
+      {!isRecent ? (
+        <div className="flex flex-col">
+          <SongItem
+            thumbnail={curSongData?.thumbnailM}
+            title={curSongData?.title}
+            artists={curSongData?.artistsNames}
+            sid={curSongData?.sid}
+            sm
+            style="bg-main-500 text-white p-2 hover:bg-main-500"
+          />
+          <div className="mt-4 flex flex-col text-sm ">
+            <span className="font-bold">Tiếp theo</span>
+            <span className="">
+              Từ playlist{" "}
+              <span className="text-main-500 font-medium">
+                {playlist?.title}
+              </span>
+            </span>
+          </div>
+          <div className="mt-2">
+            <Scrollbars
+              style={{
+                width: "100%",
+                height: "calc(100vh - 70px - 70px - 70px)",
+                autoHide: true,
+              }}
+            >
+              {playlist &&
+                playlist?.song?.items?.map((song) => (
+                  <SongItem
+                    key={song.encodeId}
+                    thumbnail={song.thumbnailM}
+                    title={song.title}
+                    artists={song.artistsNames}
+                    sid={song.encodeId}
+                    sm
+                  />
+                ))}
+            </Scrollbars>
+          </div>
         </div>
-        <div className="mt-2">
+      ) : (
+        <div className="">
           <Scrollbars
             style={{
               width: "100%",
@@ -82,20 +113,19 @@ const SidebarRight = () => {
               autoHide: true,
             }}
           >
-            {playlist &&
-              playlist?.song?.items?.map((song) => (
-                <SongItem
-                  key={song.encodeId}
-                  thumbnail={song.thumbnailM}
-                  title={song.title}
-                  artists={song.artistsNames}
-                  sid={song.encodeId}
-                  sm
-                />
-              ))}
+            {recentSongs?.map((song) => (
+              <SongItem
+                key={song.encodeId}
+                thumbnail={song.thumbnail}
+                title={song.title}
+                artists={song.artists}
+                sid={song.encodeId}
+                sm
+              />
+            ))}
           </Scrollbars>
         </div>
-      </div>
+      )}
     </div>
   );
 };

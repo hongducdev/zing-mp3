@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import actionType from "../actions/actionType";
 
 const initState = {
@@ -7,6 +8,7 @@ const initState = {
   atAlbum: false,
   songs: null,
   curAlbumId: null,
+  recentSongs: [],
 };
 
 const musicReducer = (state = initState, action) => {
@@ -42,6 +44,22 @@ const musicReducer = (state = initState, action) => {
       return {
         ...state,
         curAlbumId: action.aid || null,
+      };
+
+    case actionType.SET_RECENT:
+      var songs = state.recentSongs;
+      if (action.data) {
+        if (state.recentSongs.some((i) => i.sid === action.data.sid)) {
+          songs = songs.filter((i) => i.sid !== action.data.sid);
+        }
+        if (songs.length > 20) {
+          songs = songs.filter((i, index, self) => index !== self.length - 1);
+        }
+        songs = [action.data, ...songs];
+      }
+      return {
+        ...state,
+        recentSongs: songs,
       };
 
     default:

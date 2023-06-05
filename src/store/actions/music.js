@@ -35,6 +35,11 @@ export const setCurAlbumId = (aid) => ({
   aid,
 })
 
+export const setRecent = (data) => ({
+  type: actionTypes.SET_RECENT,
+  data,
+})
+
 // export const fetchDetailPlaylist = (pid) => async (dispath) => {
 //   try {
 //     const response = await api.apiGetDetailPlaylist(pid)

@@ -20,6 +20,12 @@ const ListItem = ({ songData }) => {
         () => {
           dispatch(actions.setCurSongId(songData?.encodeId))
           dispatch(actions.play(true))
+          dispatch(actions.setRecent({
+            thumbnail: songData?.thumbnail,
+            title: songData?.title,
+            artists: songData?.artistsNames,
+            sid: songData?.encodeId,
+          }))
         }
       }
     >
