@@ -91,6 +91,7 @@ const SearchAll = () => {
             thumbnail={item.thumbnailM}
             name={item.name}
             follow={item.totalFollow}
+            link={item.link}
           />
         ))}
       </div>

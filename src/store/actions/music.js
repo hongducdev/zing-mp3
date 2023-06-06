@@ -48,6 +48,7 @@ export const search = (keyword) => async (dispath) => {
       dispath({
         type: actionTypes.SEARCH,
         data: response.data.data,
+        keyword,
       });
     } else {
       dispath({

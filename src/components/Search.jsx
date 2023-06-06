@@ -5,7 +5,7 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 import * as actions from "../store/actions";
 import path from "../utils/path";
 
-const { BiSearch } = icons;
+const { BiSearch, IoCloseOutline } = icons;
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const Search = () => {
   };
 
   return (
-    <div className="bg-main-200 px-4 py-2 rounded-full h-10 w-full flex items-center">
+    <div className="bg-main-200 px-4 py-2 rounded-full h-10 w-full flex items-center relative">
       <span className="text-gray-500">
         <BiSearch size={24} />
       </span>
@@ -36,6 +36,14 @@ const Search = () => {
         onChange={(e) => setKeyword(e.target.value)}
         onKeyDown={handleSearch}
       />
+      {keyword && (
+        <span
+          className="absolute right-4 text-gray-500 cursor-pointer"
+          onClick={() => setKeyword("")}
+        >
+          <IoCloseOutline size={24} />
+        </span>
+      )}
     </div>
   );
 };

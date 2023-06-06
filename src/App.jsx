@@ -6,7 +6,10 @@ import {
   Public,
   Search,
   SearchAll,
+  SearchArtist,
+  SearchPlaylist,
   SearchSong,
+  Singer,
   WeekRank,
   ZingChart,
 } from "./containers/public";
@@ -31,10 +34,13 @@ const App = () => {
           <Route path={path.PLAYLIST__TITLE__PID} element={<Album />} />
           <Route path={path.WEEKRANK__TITLE__PID} element={<WeekRank />} />
           <Route path={path.ZINGCHART} element={<ZingChart />} />
-          <Route path={path.SEARCH} element={<Search />} >
+          <Route path={path.SEARCH} element={<Search />}>
             <Route path={path.ALL} element={<SearchAll />} />
             <Route path={path.SONG} element={<SearchSong />} />
+            <Route path={path.SEARCH_PLAYLIST} element={<SearchPlaylist />} />
+            <Route path={path.SEARCH_ARTIST} element={<SearchArtist />} />
           </Route>
+          <Route path={path.HOME__SINGER} element={<Singer />} />
         </Route>
       </Routes>
     </div>
