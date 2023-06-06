@@ -71,7 +71,7 @@ const SearchAll = () => {
       <div className="flex flex-wrap w-full justify-between gap-x-4">
         {searchData?.songs?.slice(0, 6).map((item) => (
           <div className="w-[45%] flex-auto" key={item.encodeId}>
-            <ListItem songData={item} isHideAlbum />
+            <ListItem songData={item} isHideAlbum isHideNode />
           </div>
         ))}
       </div>

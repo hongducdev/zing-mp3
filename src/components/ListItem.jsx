@@ -9,7 +9,7 @@ import * as actions from "../store/actions";
 
 const { IoMusicalNotesOutline } = icons;
 
-const ListItem = ({ songData, isHideAlbum }) => {
+const ListItem = ({ songData, isHideAlbum, isHideNode }) => {
   const dispatch = useDispatch();
 
   return (
@@ -29,7 +29,7 @@ const ListItem = ({ songData, isHideAlbum }) => {
       }}
     >
       <div className="flex items-center gap-[10px] w-2/4">
-        {!isHideAlbum && (
+        {!isHideNode && (
           <span>
             <IoMusicalNotesOutline />
           </span>

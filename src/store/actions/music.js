@@ -63,3 +63,26 @@ export const search = (keyword) => async (dispath) => {
     });
   }
 };
+
+export const getSearchSong = (singerId) => async (dispath) => {
+  try {
+    const response = await api.apiGetArtistSong(singerId);
+    if (response.data.err === 0) {
+      console.log(response.data.data.items);
+      dispath({
+        type: actionTypes.PLAYLIST,
+        songs: response.data.data.items,
+      });
+    } else {
+      dispath({
+        type: actionTypes.PLAYLIST,
+        songs: null,
+      });
+    }
+  } catch (error) {
+    dispath({
+      type: actionTypes.PLAYLIST,
+      songs: null,
+    });
+  }
+};
