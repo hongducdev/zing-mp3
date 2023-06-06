@@ -33,7 +33,7 @@ const Album = () => {
   }, [title, pid]);
 
   useEffect(() => {
-    if (location.state.playAlbum) {
+    if (location?.state?.playAlbum) {
       const random =
         Math.floor(Math.random() * detailPlaylist?.song?.items?.length) - 1;
       dispatch(

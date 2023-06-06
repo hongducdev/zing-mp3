@@ -9,30 +9,31 @@ import * as actions from "../store/actions";
 
 const { IoMusicalNotesOutline } = icons;
 
-const ListItem = ({ songData }) => {
-
+const ListItem = ({ songData, isHideAlbum }) => {
   const dispatch = useDispatch();
 
   return (
     <div
       className="flex items-center justify-between p-[10px] border-b-[1px] border-[rgba(0. 0. 0. 0.5)] hover:bg-main-200 rounded-md cursor-pointer"
-      onClick={
-        () => {
-          dispatch(actions.setCurSongId(songData?.encodeId))
-          dispatch(actions.play(true))
-          dispatch(actions.setRecent({
+      onClick={() => {
+        dispatch(actions.setCurSongId(songData?.encodeId));
+        dispatch(actions.play(true));
+        dispatch(
+          actions.setRecent({
             thumbnail: songData?.thumbnail,
             title: songData?.title,
             artists: songData?.artistsNames,
             sid: songData?.encodeId,
-          }))
-        }
-      }
+          })
+        );
+      }}
     >
       <div className="flex items-center gap-[10px] w-2/4">
-        <span>
-          <IoMusicalNotesOutline />
-        </span>
+        {!isHideAlbum && (
+          <span>
+            <IoMusicalNotesOutline />
+          </span>
+        )}
         <img
           src={songData?.thumbnail}
           alt="thumnail"
@@ -47,10 +48,12 @@ const ListItem = ({ songData }) => {
           </span>
         </div>
       </div>
-      <div className="w-1/4 text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis">
-        {songData?.album?.title}
-      </div>
-      <div className="flex-1 flex justify-end w-1/4">
+      {!isHideAlbum && (
+        <div className="w-1/4 text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis">
+          {songData?.album?.title}
+        </div>
+      )}
+      <div className="flex-1 flex justify-end w-1/4 text-xs">
         {moment(songData?.duration * 1000).format("mm:ss")}
       </div>
     </div>

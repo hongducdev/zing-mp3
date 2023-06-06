@@ -10,6 +10,7 @@ import {
   AiOutlineArrowRight,
   AiOutlineHeart,
   AiFillHeart,
+  AiOutlineUserAdd,
 } from "react-icons/ai";
 import { BiSearch, BiDotsHorizontalRounded } from "react-icons/bi";
 import {
@@ -48,6 +49,7 @@ const icons = {
   BsVolumeDown,
   BsVolumeMute,
   RiDeleteBinLine,
+  AiOutlineUserAdd,
 };
 
 export default icons;
