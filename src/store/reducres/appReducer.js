@@ -8,6 +8,7 @@ const initState = {
   playlist: [],
   chart: {},
   rank: [],
+  singers: null
 };
 
 const appReducer = (state = initState, action) => {
@@ -33,6 +34,9 @@ const appReducer = (state = initState, action) => {
         rank:
           action.homeData?.find((item) => item.sectionType === "RTChart")
             ?.items || [],
+        singers:
+          action.homeData?.find((item) => item.sectionType === "artistSpotlight")
+            ?.items || null,
       };
     case actionType.LOADING:
       return {

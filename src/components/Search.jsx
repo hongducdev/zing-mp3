@@ -1,7 +1,7 @@
 import icons from "../utils/icons";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate, useParams } from "react-router-dom";
 import * as actions from "../store/actions";
 import path from "../utils/path";
 
@@ -10,6 +10,7 @@ const { BiSearch, IoCloseOutline } = icons;
 const Search = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { singer } = useParams();
 
   const [keyword, setKeyword] = useState("");
 
@@ -24,7 +25,11 @@ const Search = () => {
   };
 
   return (
-    <div className="bg-main-200 px-4 py-2 rounded-full h-10 w-full flex items-center relative">
+    <div
+      className={` px-4 py-2 rounded-full h-10 w-full flex items-center relative ${
+        singer ? "bg-white bg-opacity-10" : "bg-main-200"
+      }}`}
+    >
       <span className="text-gray-500">
         <BiSearch size={24} />
       </span>

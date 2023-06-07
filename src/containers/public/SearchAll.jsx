@@ -6,7 +6,6 @@ import { Artist, ListItem, SectionItem } from "../../components";
 const SearchAll = () => {
   const { searchData } = useSelector((state) => state.music);
 
-  console.log("🚀 ~ SearchAll ~ searchData", searchData);
 
   return (
     <div className="px-[59px] w-full mt-8">
