@@ -40,7 +40,8 @@ const App = () => {
             <Route path={path.SEARCH_PLAYLIST} element={<SearchPlaylist />} />
             <Route path={path.SEARCH_ARTIST} element={<SearchArtist />} />
           </Route>
-          <Route path={path.HOME__SINGER} element={<Singer />} />
+          <Route path={path.HOME_SINGER} element={<Singer />} />
+          <Route path={path.HOME_ARTIST_SINGER} element={<Singer />} />
         </Route>
       </Routes>
     </div>

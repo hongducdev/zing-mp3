@@ -19,7 +19,7 @@ const SectionItem = ({ item, isShowTitle }) => {
   };
 
   return (
-    <div className="flex flex-col gap-3 flex-auto w-1/6 cursor-pointer h-auto">
+    <div className="flex flex-col gap-3 flex-auto justify-start w-1/5 text-sm cursor-pointer">
       <div className="relative group">
         <img
           src={item.thumbnailM}

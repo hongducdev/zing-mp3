@@ -10,8 +10,8 @@ const { AiOutlineUserAdd } = icons;
 
 const Artist = ({ thumbnail, name, follow, link }) => {
   return (
-    <Link to={link} className="w-1/6">
-      <div className="flex flex-col gap-4 group">
+    <Link to={link} className="w-1/5">
+      <div className="flex flex-col gap-4 group text-center">
         <div className="relative">
           <img
             src={thumbnail}

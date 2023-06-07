@@ -25,11 +25,7 @@ const Search = () => {
   };
 
   return (
-    <div
-      className={` px-4 py-2 rounded-full h-10 w-full flex items-center relative ${
-        singer ? "bg-white bg-opacity-10" : "bg-main-200"
-      }}`}
-    >
+    <div className="px-4 py-2 rounded-full h-10 w-full flex items-center relative bg-main-200">
       <span className="text-gray-500">
         <BiSearch size={24} />
       </span>
