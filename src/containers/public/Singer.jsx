@@ -110,7 +110,7 @@ const Singer = () => {
           <div className="text-sm text-gray-700">
             <p
               className=" mb-12 line-clamp-5"
-              dangerouslySetInnerHTML={{ __html: artistData?.biography }}
+              dangerouslySetInnerHTML={{ __html: artistData?.biography || "Không có thông tin" }}
             ></p>
             <div className="flex items-center gap-12">
               <div className="flex flex-col gap-1">
