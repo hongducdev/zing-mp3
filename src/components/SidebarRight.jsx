@@ -68,7 +68,7 @@ const SidebarRight = () => {
           <SongItem
             thumbnail={curSongData?.thumbnailM}
             title={curSongData?.title}
-            artists={curSongData?.artistsNames}
+            artists={curSongData?.artists}
             sid={curSongData?.sid}
             sm
             style="bg-main-500 text-white p-2 hover:bg-main-500"
@@ -96,7 +96,7 @@ const SidebarRight = () => {
                     key={song.encodeId}
                     thumbnail={song.thumbnailM}
                     title={song.title}
-                    artists={song.artistsNames}
+                    artists={song.artists}
                     sid={song.encodeId}
                     sm
                   />

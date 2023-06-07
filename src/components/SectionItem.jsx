@@ -45,7 +45,39 @@ const SectionItem = ({ item, isShowTitle }) => {
           <span className="font-bold hover:text-main-500 line-clamp-1">
             <Link to={item?.link?.split(".")[0]}>{item.title}</Link>
           </span>
-          <span className="">{item.artistsNames}</span>
+          <span className="">
+            {item?.artists?.map((item, index) => (
+              <span className="" key={item?.id}>
+                <Link
+                  to={item?.link?.split(".")[0]}
+                  className="text-xs text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis hover:text-main-500"
+                >
+                  {item?.name}
+                </Link>
+                {index !== item?.artists?.length - 1 && ", "}
+              </span>
+            ))}
+          </span>
+        </div>
+      )}
+      {item.sortDescription === "" && (
+        <div className="flex flex-col text-sm">
+          <span className="font-bold hover:text-main-500 line-clamp-1">
+            <Link to={item?.link?.split(".")[0]}>{item.title}</Link>
+          </span>
+          <span className="">
+            {item?.artists?.map((item, index) => (
+              <span className="" key={item?.id}>
+                <Link
+                  to={item?.link?.split(".")[0]}
+                  className="text-xs text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis hover:text-main-500"
+                >
+                  {item?.name}
+                </Link>
+                {index !== item?.artists?.length - 1 && ", "}
+              </span>
+            ))}
+          </span>
         </div>
       )}
     </div>

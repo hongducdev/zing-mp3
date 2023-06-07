@@ -6,6 +6,7 @@ import icons from "../utils/icons";
 import moment from "moment/moment";
 import { useDispatch } from "react-redux";
 import * as actions from "../store/actions";
+import { Link } from "react-router-dom";
 
 const { IoMusicalNotesOutline } = icons;
 
@@ -22,7 +23,7 @@ const ListItem = ({ songData, isHideAlbum, isHideNode }) => {
           actions.setRecent({
             thumbnail: songData?.thumbnail,
             title: songData?.title,
-            artists: songData?.artistsNames,
+            artists: songData?.artists,
             sid: songData?.encodeId,
           })
         );
@@ -43,15 +44,28 @@ const ListItem = ({ songData, isHideAlbum, isHideNode }) => {
           <span className="font-medium text-sm whitespace-nowrap overflow-hidden text-ellipsis">
             {songData?.title}
           </span>
-          <span className="text-xs text-gray-500">
-            {songData?.artistsNames}
+          <span className="">
+            {songData?.artists?.map((item, index) => (
+              <span className="" key={item?.id}>
+                <Link
+                  to={item?.link?.split(".")[0]}
+                  className="text-xs text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis hover:text-main-500"
+                >
+                  {item?.name}
+                </Link>
+                {index !== songData.artists.length - 1 && ", "}
+              </span>
+            ))}
           </span>
         </div>
       </div>
       {!isHideAlbum && (
-        <div className="w-1/4 text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis">
+        <Link
+          to={songData?.album?.link?.split(".")[0]}
+          className="w-1/4 text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis hover:text-main-500"
+        >
           {songData?.album?.title}
-        </div>
+        </Link>
       )}
       <div className="flex-1 flex justify-end w-1/4 text-xs">
         {moment(songData?.duration * 1000).format("mm:ss")}

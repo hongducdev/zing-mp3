@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { handleNumber } from "../../utils/fn";
 
 import { Artist, ListItem, SectionItem } from "../../components";
+import { Link } from "react-router-dom";
 
 const SearchAll = () => {
   const { searchData } = useSelector((state) => state.music);
@@ -21,9 +22,12 @@ const SearchAll = () => {
               />
               <div className="flex flex-col gap-[6px] text-xs text-gray-600">
                 <span className="text-xs">Nghệ sĩ</span>
-                <span className="text-sm font-semibold">
+                <Link
+                  to={searchData?.top?.link}
+                  className="text-sm font-semibold hover:text-main-500 hover:underline"
+                >
                   {searchData?.top?.name}
-                </span>
+                </Link>
                 <span className="">
                   {handleNumber(searchData?.artists[0]?.totalFollow)} quan tâm
                 </span>

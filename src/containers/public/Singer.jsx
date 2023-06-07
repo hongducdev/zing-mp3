@@ -3,15 +3,26 @@ import { useParams } from "react-router-dom";
 import * as api from "../../api";
 import icons from "../../utils/icons";
 import { Artist, ListItem, SectionItem } from "../../components";
+import { useDispatch } from "react-redux";
+import actionType from "../../store/actions/actionType";
 const { AiOutlineUserAdd, BsPlayFill } = icons;
 
 const Singer = () => {
   const { singer } = useParams();
+  const dispatch = useDispatch();
   const [artistData, setArtistData] = React.useState(null);
 
   useEffect(() => {
+    dispatch({
+      type: actionType.LOADING,
+      payload: true,
+    })
     const fetchData = async () => {
       const res = await api.apiGetArtist(singer);
+      dispatch({
+        type: actionType.LOADING,
+        payload: false,
+      })
       if (res.data.err === 0) {
         setArtistData(res.data.data);
       }

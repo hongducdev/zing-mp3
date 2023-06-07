@@ -42,8 +42,16 @@ export const setRecent = (data) => ({
 });
 
 export const search = (keyword) => async (dispath) => {
+  dispath({
+    type: actionTypes.LOADING,
+    flag: true,
+  });
   try {
     const response = await api.apiSearch(keyword);
+    dispath({
+      type: actionTypes.LOADING,
+      flag: false,
+    });
     if (response.data.err === 0) {
       dispath({
         type: actionTypes.SEARCH,

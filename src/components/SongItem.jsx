@@ -8,6 +8,7 @@ import AudioLoading from "./AudioLoading";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import * as actions from "../store/actions";
+import { Link } from "react-router-dom";
 
 const { BsPlayFill } = icons;
 
@@ -28,19 +29,21 @@ const SongItem = ({
   return (
     <div
       className={`w-full flex-auto flex items-center gap-[10px] p-[10px] rounded-md cursor-pointer group hover:bg-main-200 ${
-        order
+        percent
           ? "text-white bg-white bg-opacity-10 hover:bg-opacity-30 py-[10px] px-4"
           : ""
       } ${style} `}
       onClick={() => {
         dispatch(actions.setCurSongId(sid));
         dispatch(actions.play(true));
-        dispatch(actions.setRecent({
-          thumbnail,
-          title,
-          artists,
-          sid,
-        }))
+        dispatch(
+          actions.setRecent({
+            thumbnail,
+            title,
+            artists,
+            sid,
+          })
+        );
       }}
     >
       {order && (
@@ -71,11 +74,24 @@ const SongItem = ({
             {isLoading ? <AudioLoading /> : <BsPlayFill size={24} />}
           </div>
         </div>
-        <div className="">
+        <div className="flex flex-col">
           <h3 className="text-sm font-medium">{title}</h3>
-          <p className={`text-xs ${order && "text-gray-300"}`}>
-            {artists}
-          </p>
+
+          <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+            {artists?.map((item, index) => (
+              <span className="" key={item?.id}>
+                <Link
+                  to={item?.link?.split(".")[0]}
+                  className={`text-xs ${
+                    percent && "text-gray-300"
+                  } hover:text-main-500`}
+                >
+                  {item?.name}
+                </Link>
+                {index !== artists.length - 1 && ", "}
+              </span>
+            ))}
+          </span>
           {releaseDate && (
             <span className="text-xs text-gray-500">
               {moment(releaseDate * 1000).fromNow()}

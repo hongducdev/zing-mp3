@@ -8,7 +8,7 @@ const { MdKeyboardArrowRight } = icons;
 
 const NewRelease = () => {
   const { newRelease } = useSelector((state) => state.app);
-  const [isActive, setIsActive] = useState(0);
+  const [isActive, setIsActive] = useState(1);
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
@@ -65,13 +65,13 @@ const NewRelease = () => {
       </div>
       <div className="flex flex-wrap">
         {songs?.map((item) => (
-          <div className="w-[45%] lg:w-[30%]" key={item.encodeId}>
+          <div className="w-full min-[768px]:w-[45%] min-[1200px]:w-[30%]" key={item.encodeId}>
             <SongItem
               thumbnail={item.thumbnailM}
               title={item?.title}
               sid={item?.encodeId}
               releaseDate={item?.releaseDate}
-              artists={item?.artistsNames}
+              artists={item?.artists}
             />
           </div>
         ))}

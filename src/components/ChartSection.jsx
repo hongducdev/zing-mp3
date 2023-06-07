@@ -113,7 +113,7 @@ const ChartSection = () => {
     <div className="px-[59px] mt-12">
       <div className="bg-[#41185e] p-5 rounded-lg flex flex-col gap-5 h-full">
         <h3 className="text-3xl font-bold text-white">#zingchart</h3>
-        <div className="flex gap-7 flex-grow">
+        <div className="flex gap-7 flex-col-reverse min-[1200px]:flex-row">
           <div className="flex-4 flex flex-col w-full gap-[10px]">
             {rank
               ?.filter((i, index) => index < 3)
@@ -122,17 +122,20 @@ const ChartSection = () => {
                   key={item?.encodeId}
                   thumbnail={item?.thumbnail}
                   title={item?.title}
-                  artists={item?.artistsNames || []}
+                  artists={item?.artists || []}
                   sid={item?.encodeId}
                   order={index + 1}
                   percent={Math.round((+item.score * 100) / +chart?.totalScore)}
                 />
               ))}
-              <div className="mt-3 text-center">
-                <Link to={path.ZINGCHART} className="text-white text-sm border border-white rounded-full px-6 py-2">
-                  Xem thêm
-                </Link>
-              </div>
+            <div className="mt-3 text-center">
+              <Link
+                to={path.ZINGCHART}
+                className="text-white text-sm border border-white rounded-full px-6 py-2"
+              >
+                Xem thêm
+              </Link>
+            </div>
           </div>
           <div className="flex-6 h-full relative">
             {data && <Line data={data} options={options} ref={chartRef} />}

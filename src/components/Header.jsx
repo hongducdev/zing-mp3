@@ -22,7 +22,11 @@ const Header = () => {
           <Search />
         </div>
       </div>
-      <div className="">dang nhap</div>
+      <div className="flex-none">
+        <button className="text-white bg-main-500 px-10 py-2 rounded-full">
+          Đăng nhập
+        </button>
+      </div>
     </div>
   );
 };

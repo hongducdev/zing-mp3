@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import { Chart } from "chart.js/auto";
 import _ from "lodash";
+import { SongItem } from "../../components";
 
 const ZingChart = () => {
 
@@ -156,6 +157,20 @@ const ZingChart = () => {
             </span>
           </div>
         </div>
+      </div>
+      <div className="text-black flex flex-col mt-10">
+        {rank
+          .map((item, index) => (
+            <SongItem
+              key={item?.encodeId}
+              thumbnail={item?.thumbnail}
+              title={item?.title}
+              artists={item?.artists || []}
+              sid={item?.encodeId}
+              order={index + 1}
+              
+            />
+          ))}
       </div>
     </div>
   );

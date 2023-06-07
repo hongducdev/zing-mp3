@@ -10,6 +10,7 @@ import * as actions from "../store/actions";
 import { toast } from "react-toastify";
 import moment from "moment";
 import LoadingSong from "./LoadingSong";
+import { Link } from "react-router-dom";
 
 const {
   AiFillHeart,
@@ -183,8 +184,18 @@ const Player = ({ setIsShowSidebarRight }) => {
             <span className="text-sm font-medium text-gray-700">
               {songInfo?.title}
             </span>
-            <span className="text-xs text-gray-500">
-              {songInfo?.artistsNames}
+            <span className="">
+              {songInfo?.artists?.map((item, index) => (
+                <span className="" key={item?.id}>
+                  <Link
+                    to={item?.link?.split(".")[0]}
+                    className="text-xs text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis hover:text-main-500"
+                  >
+                    {item?.name}
+                  </Link>
+                  {index !== songInfo.artists.length - 1 && ", "}
+                </span>
+              ))}
             </span>
           </div>
         </div>
@@ -268,12 +279,8 @@ const Player = ({ setIsShowSidebarRight }) => {
         </div>
       </div>
       <div className="w-[30%] flex justify-end items-center gap-4">
-        <span className="cursor-pointer" onClick={
-          handleToggleMute
-        }>
-          {
-            +volume ? <BsVolumeDown size={26} /> : <BsVolumeMute size={26} />
-          }
+        <span className="cursor-pointer" onClick={handleToggleMute}>
+          {+volume ? <BsVolumeDown size={26} /> : <BsVolumeMute size={26} />}
         </span>
         <input
           type="range"
@@ -282,6 +289,7 @@ const Player = ({ setIsShowSidebarRight }) => {
           max={100}
           value={volume}
           onChange={handleChangeVolume}
+          className="w-[100px] h-[3px] bg-main-200 cursor-pointer accent-main-500"
         />
         <span
           className="p-2 rounded bg-main-500 cursor-pointer"
