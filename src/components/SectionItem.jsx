@@ -65,7 +65,7 @@ const SectionItem = ({ item, isShowTitle }) => {
           <span className="font-bold hover:text-main-500 line-clamp-1">
             <Link to={item?.link?.split(".")[0]}>{item.title}</Link>
           </span>
-          <span className="">
+          <span className="line-clamp-1">
             {item?.artists?.map((item, index) => (
               <span className="" key={item?.id}>
                 <Link

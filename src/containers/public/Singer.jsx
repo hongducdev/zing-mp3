@@ -84,7 +84,7 @@ const Singer = () => {
               </h3>
               <div className="inline-flex gap-5">
                 {item?.items?.slice(0, 5).map((item) => (
-                  <SectionItem key={item.encodeId} item={item} isShowTitle />
+                  <SectionItem key={item.encodeId} item={item} />
                 ))}
               </div>
             </div>

@@ -6,13 +6,20 @@ import {
   SidebarLeft,
   SidebarRight,
 } from "../../components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 import { useSelector } from "react-redux";
 
 const Public = () => {
-  const [isShowSidebarRight, setIsShowSidebarRight] = useState(false);
+  const [isShowSidebarRight, setIsShowSidebarRight] = useState(true);
   const { isLoading } = useSelector((state) => state.app);
+  const {curSongId} = useSelector((state) => state.music);
+  const [isShowPlayer, setIsShowPlayer] = useState(curSongId !== null);
+
+
+  useEffect(() => {
+    setIsShowPlayer(curSongId !== null);
+  }, [curSongId]);
 
   return (
     <div className="w-full h-screen flex flex-col bg-main-300 relative">
@@ -47,9 +54,11 @@ const Public = () => {
           </div>
         )}
       </div>
-      <div className="h-[90px] fixed bottom-0 left-0 right-0 z-20 w-full">
-        <Player setIsShowSidebarRight={setIsShowSidebarRight} />
-      </div>
+      {isShowPlayer && (
+        <div className="h-[90px] fixed bottom-0 left-0 right-0 z-20 w-full">
+          <Player setIsShowSidebarRight={setIsShowSidebarRight} />
+        </div>
+      )}
     </div>
   );
 };
