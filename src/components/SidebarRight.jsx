@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import icons from "../utils/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SongItem from "./SongItem";
 import * as api from "../api";
 import Scrollbars from "react-custom-scrollbars-2";
 import { setCurSongId } from "../store/actions";
+import * as actions from "../store/actions";
 
 const { RiDeleteBinLine } = icons;
 
@@ -14,6 +15,7 @@ const SidebarRight = () => {
   const { curSongData, curAlbumId, recentSongs, isPlaying } = useSelector(
     (state) => state.music
   );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchAlbum = async () => {
@@ -30,6 +32,10 @@ const SidebarRight = () => {
   useEffect(() => {
     if (isPlaying) setIsRecent(false);
   }, [isPlaying, setCurSongId]);
+
+  const handleDeletePlaylist = () => {
+    dispatch(actions.setRecent([]));
+  };
 
   return (
     <div className="flex flex-col text-xs w-full px-2">
@@ -59,6 +65,7 @@ const SidebarRight = () => {
         <span
           className="p-2 rounded-full flex items-center justify-center bg-main-100 cursor-pointer"
           title="Xóa danh sách phát"
+          onClick={handleDeletePlaylist}
         >
           <RiDeleteBinLine size={20} />
         </span>

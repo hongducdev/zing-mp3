@@ -8,14 +8,14 @@ import { useDispatch } from "react-redux";
 import * as actions from "../store/actions";
 import { Link } from "react-router-dom";
 
-const { IoMusicalNotesOutline } = icons;
+const { IoMusicalNotesOutline, BsPlayFill } = icons;
 
 const ListItem = ({ songData, isHideAlbum, isHideNode }) => {
   const dispatch = useDispatch();
 
   return (
     <div
-      className="flex items-center justify-between p-[10px] border-b-[1px] border-[rgba(0. 0. 0. 0.5)] hover:bg-main-200 rounded-md cursor-pointer"
+      className="flex items-center justify-between p-[10px] border-b-[1px] border-[rgba(0. 0. 0. 0.5)] group hover:bg-main-200 rounded-md cursor-pointer"
       onClick={() => {
         dispatch(actions.setCurSongId(songData?.encodeId));
         dispatch(actions.play(true));
@@ -35,11 +35,16 @@ const ListItem = ({ songData, isHideAlbum, isHideNode }) => {
             <IoMusicalNotesOutline />
           </span>
         )}
-        <img
-          src={songData?.thumbnail}
-          alt="thumnail"
-          className="w-10 h-10 rounded-sm object-cover"
-        />
+        <div className="relative">
+          <img
+            src={songData?.thumbnail}
+            alt="thumbnail"
+            className="w-10 h-10 rounded-sm object-cover"
+          />
+          <div className="absolute inset-0 hidden group-hover:flex items-center justify-center bg-black bg-opacity-30 rounded-sm ">
+            <BsPlayFill className="text-white text-2xl" />
+            </div>
+        </div>
         <div className="flex flex-col gap-1">
           <span className="font-medium text-sm whitespace-nowrap overflow-hidden text-ellipsis">
             {songData?.title}

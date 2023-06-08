@@ -19,7 +19,7 @@ const SectionItem = ({ item, isShowTitle }) => {
   };
 
   return (
-    <div className="flex flex-col gap-3 flex-auto justify-start w-1/5 text-sm cursor-pointer">
+    <div className="flex flex-col gap-3 flex-auto justify-start text-sm cursor-pointer">
       <div className="relative group">
         <img
           src={item.thumbnailM}
@@ -60,7 +60,7 @@ const SectionItem = ({ item, isShowTitle }) => {
           </span>
         </div>
       )}
-      {item.sortDescription === "" && (
+      {item.sortDescription === "" && !isShowTitle && (
         <div className="flex flex-col text-sm">
           <span className="font-bold hover:text-main-500 line-clamp-1">
             <Link to={item?.link?.split(".")[0]}>{item.title}</Link>

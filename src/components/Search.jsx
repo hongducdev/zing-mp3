@@ -10,7 +10,6 @@ const { BiSearch, IoCloseOutline } = icons;
 const Search = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { singer } = useParams();
 
   const [keyword, setKeyword] = useState("");
 

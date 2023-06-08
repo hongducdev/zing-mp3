@@ -15,7 +15,7 @@ const Section = ({ data }) => {
           Tất cả <MdKeyboardArrowRight size={20} />
         </span>
       </div>
-      <div className="flex items-start gap-5">
+      <div className="grid grid-cols-5 gap-5">
         {data &&
           data?.items
             ?.slice(0, 5)

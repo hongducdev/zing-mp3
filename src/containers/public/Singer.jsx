@@ -30,6 +30,10 @@ const Singer = () => {
     fetchData();
   }, [singer]);
 
+  useEffect(() => {
+    document.title = artistData?.name;
+  }, [artistData]);
+
   let artistSections = artistData?.sections;
 
   return (
@@ -82,7 +86,7 @@ const Singer = () => {
               <h3 className="text-xl font-bold my-5 capitalize">
                 {item?.title}
               </h3>
-              <div className="inline-flex gap-5">
+              <div className="grid grid-cols-5 gap-5">
                 {item?.items?.slice(0, 5).map((item) => (
                   <SectionItem key={item.encodeId} item={item} />
                 ))}

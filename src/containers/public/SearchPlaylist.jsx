@@ -24,9 +24,9 @@ const SearchPlaylist = () => {
     <div className="px-[59px] w-full mt-8">
       <h3 className="text-xl font-bold mb-5 capitalize">Playlist/album</h3>
       <Scrollbars style={{ height: "calc(100vh - 200px)" }}>
-        <div className="flex flex-wrap gap-5 items-start">
+        <div className="grid grid-cols-5 gap-5">
           {playlists?.items?.map((playlist) => (
-            <SectionItem key={playlist.link} item={playlist} isShowTitle />
+            <SectionItem key={playlist.link} item={playlist} />
           ))}
         </div>
       </Scrollbars>

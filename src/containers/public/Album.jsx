@@ -43,6 +43,10 @@ const Album = () => {
     }
   }, [pid, detailPlaylist]);
 
+  useEffect(() => {
+    document.title = detailPlaylist?.title;
+  }, [detailPlaylist]);
+
   return (
     <div className="flex gap-8 w-full h-full px-[59px]">
       <div className="flex-none w-1/4">

@@ -1,12 +1,28 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleNumber } from "../../utils/fn";
-
+import icons from "../../utils/icons";
 import { Artist, ListItem, SectionItem } from "../../components";
 import { Link } from "react-router-dom";
+import * as actions from "../../store/actions";
+
+const { BsPlayFill } = icons;
 
 const SearchAll = () => {
   const { searchData } = useSelector((state) => state.music);
+  const dispatch = useDispatch();
 
+  const handlePlay = (item) => {
+    dispatch(actions.setCurSongId(item.encodeId));
+    dispatch(actions.play(true));
+    dispatch(
+      actions.setRecent({
+        thumbnail: item.thumbnailM,
+        title: item.title,
+        artists: item.artists,
+        sid: item.encodeId,
+      })
+    );
+  };
 
   return (
     <div className="px-[59px] w-full mt-8">
@@ -40,9 +56,10 @@ const SearchAll = () => {
                 alt="thumbnail"
                 className="w-[84px] h-[84px] rounded-md"
               />
+
               <div className="flex flex-col gap-[6px] text-xs text-gray-600">
                 <span className="">Bài hát</span>
-                <span className="text-sm font-semibold text-black">
+                <span className="text-sm font-semibold text-black line-clamp-1">
                   {searchData?.top?.title}
                 </span>
                 <span className="">{searchData?.top?.artistsNames}</span>
@@ -56,13 +73,14 @@ const SearchAll = () => {
             key={item.encodeId}
           >
             <img
-              src={item?.thumbnailM}
+              src={searchData?.top?.thumbnailM}
               alt="thumbnail"
               className="w-[84px] h-[84px] rounded-md"
             />
+
             <div className="flex flex-col gap-[6px] text-xs text-gray-600">
               <span className="">Bài hát</span>
-              <span className="text-sm font-semibold text-black">
+              <span className="text-sm font-semibold text-black line-clamp-1">
                 {item?.title}
               </span>
               <span className="">{item?.artistsNames}</span>
@@ -79,7 +97,7 @@ const SearchAll = () => {
         ))}
       </div>
       <h3 className="text-xl font-bold my-5 capitalize">Playlist/Album</h3>
-      <div className="flex items-start gap-5">
+      <div className="grid grid-cols-5 gap-5">
         {searchData?.playlists?.slice(0, 5).map((item) => (
           <SectionItem key={item.encodeId} item={item} isShowTitle />
         ))}
