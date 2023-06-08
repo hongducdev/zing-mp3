@@ -34,7 +34,6 @@ const Player = ({ setIsShowSidebarRight }) => {
   const [songInfo, setSongInfo] = useState({});
   const [curTime, setCurTime] = useState(0);
   const [audio, setAudio] = useState(new Audio());
-  const [error, setError] = useState(null);
   const [isShuffle, setIsShuffle] = useState(false);
   const [repeatMode, setRepeatMode] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,6 +41,7 @@ const Player = ({ setIsShowSidebarRight }) => {
 
   const thumbRef = useRef(null);
   const trackRef = useRef(null);
+  const intervalIdRef = useRef(null);
   var intervalId;
 
   useEffect(() => {
@@ -72,18 +72,20 @@ const Player = ({ setIsShowSidebarRight }) => {
   }, [curSongId]);
 
   useEffect(() => {
-    intervalId && clearInterval(intervalId);
-    audio.pause();
-    audio.load();
-    if (isPlaying) {
-      audio.play();
-      intervalId = setInterval(() => {
-        let percent = Math.round((audio.currentTime / audio.duration) * 100);
-        thumbRef.current.style.right = `${100 - percent}%`;
-        setCurTime(Math.round(audio.currentTime));
-      }, 200);
+    if (audio) {
+      intervalIdRef.current && clearInterval(intervalIdRef.current);
+      audio.pause();
+      audio.load();
+      if (isPlaying) {
+        audio.play();
+        intervalIdRef.current = setInterval(() => {
+          let percent = Math.round((audio.currentTime / audio.duration) * 100);
+          thumbRef.current.style.right = `${100 - percent}%`;
+          setCurTime(Math.round(audio.currentTime));
+        }, 200);
+      }
     }
-  }, [audio]);
+  }, [audio, isPlaying]);
 
   useEffect(() => {
     const handleEnded = () => {
